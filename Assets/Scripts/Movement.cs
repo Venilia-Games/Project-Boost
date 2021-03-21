@@ -10,9 +10,11 @@ public class Movement : MonoBehaviour
     [SerializeField] private float mainThrust = 1000f;
     [SerializeField] private float rotationThrust = 100f;
     private Rigidbody _rigidbody;
+    private AudioSource _audioSource;
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -28,6 +30,14 @@ public class Movement : MonoBehaviour
         {
             var scaledThrust = Vector3.up * (mainThrust * Time.deltaTime);
             _rigidbody.AddRelativeForce(scaledThrust);
+            if (!_audioSource.isPlaying)
+            {
+                _audioSource.Play();
+            }
+        }
+        else
+        {
+            _audioSource.Stop();
         }
         
     }
